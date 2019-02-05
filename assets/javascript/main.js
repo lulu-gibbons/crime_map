@@ -1,6 +1,19 @@
 console.log(geoJson);
 
 
+$(document).on("click", "#add-input", function(){
+
+  zipCode = $("#user-input").val();
+
+  console.log("zipcode:" + zipCode);
+
+  zipCodeItem = getZipcodeItem();
+  swappedArray = getCoordinates(zipCodeItem.geometry);
+  $('#user-input').val('');
+
+});
+
+
 function getZipcodeItem() {
   var out;
   geoJson.features.forEach(function(zipCodeItem) {
@@ -14,12 +27,9 @@ function getZipcodeItem() {
 
 function getCoordinates(geometry){
   var swappedArray = [];
-  
+
   for (var i = 0; i < geometry.coordinates[0].length; i++){
-    //console.log(geometry.coordinates[i]);
-    // var aux = geometry.coordinates[i][0];
-    // geometry.coordinates[i][0] = geometry.coordinates[i][1];
-    // geometry.coordinates[i][1] = aux;
+
     swappedArray.push([
       geometry.coordinates[0][i][1],
       geometry.coordinates[0][i][0]
@@ -27,13 +37,12 @@ function getCoordinates(geometry){
   }
   return swappedArray;
 }
+
 var zipCode = "98136";
 var zipCodeItem = getZipcodeItem();
 var swappedArray = getCoordinates(zipCodeItem.geometry);
 
-console.log(getCoordinates(zipCodeItem.geometry));
-
-
+//console.log(getCoordinates(zipCodeItem.geometry));
 
 
 
@@ -43,7 +52,7 @@ new Vue({
   data: { /* Data properties will go here */
     map: null,
     tileLayer: null
-    // 
+    //
   },
   mounted() { /* Code to run when app is mounted */
     this.initMap();
